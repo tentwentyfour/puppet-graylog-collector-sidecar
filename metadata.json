@@ -1,0 +1,49 @@
+{
+  "name": "graylog-collector-sidecar",
+  "version": "0.1.0",
+  "author": "TenTwentyFour S.à r.l.",
+  "summary": "Install and configure Graylog-Collector-Sidecar",
+  "license": "Apache-2.0",
+  "source": "https://github.com/tentwentyfour/puppet-graylog-collector-sidecar",
+  "project_page": "https://github.com/tentwentyfour/puppet-graylog-collector-sidecar",
+  "issues_url": "https://github.com/tentwentyfour/puppet-graylog-collector-sidecar/issues",
+  "tags": [
+    "graylog2",
+    "graylog",
+    "logging",
+    "logs",
+    "events",
+    "collector",
+    "sidecar"
+  ],
+  "requirements": [
+    { "name": "puppet", "version_requirement": "3.x" }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.11.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs-apt",
+      "version_requirement": ">= 2.2.2 < 3.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04",
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
+    }
+  ],
+  "data_provider": null
+}

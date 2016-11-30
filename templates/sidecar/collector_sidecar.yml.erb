@@ -1,0 +1,28 @@
+# WARNING: Maintained by Puppet, manual changes will be lost!
+
+server_url: <%= @server_url %>
+update_interval: <%= @update_interval %>
+tls_skip_verify: <%= @tls_skip_verify %>
+send_status: <%= @send_status %>
+list_log_files:
+<% @log_files.sort.each do |log_dir| -%>
+  - <%= log_dir %>
+<% end -%>
+node_id: graylog-collector-sidecar-<%= scope.lookupvar('hostname') %>
+collector_id: file:/etc/graylog/collector-sidecar/collector-id
+log_path: /var/log/graylog/collector-sidecar
+log_rotation_time: 86400
+log_max_age: 604800
+tags:
+<% @tags.sort.each do |tag| -%>
+  - <%= tag %>
+<% end -%>
+backends:
+  - name: nxlog
+    enabled: false
+    binary_path: /usr/bin/nxlog
+    configuration_path: /etc/graylog/collector-sidecar/generated/nxlog.conf
+  - name: filebeat
+    enabled: true
+    binary_path: /usr/bin/filebeat
+    configuration_path: /etc/graylog/collector-sidecar/generated/filebeat.yml
