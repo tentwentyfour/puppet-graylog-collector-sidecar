@@ -27,10 +27,6 @@ class gcs::install {
     Package { provider => 'dpkg', }
   }
 
-  file { 'package_file':
-    path   => $package,
-    ensure => absent,
-  }->
   exec { 'retrieve_gcs':
     command => "/usr/bin/wget -q ${::gcs::download_url} -O ${package}",
     creates => "${package}",
