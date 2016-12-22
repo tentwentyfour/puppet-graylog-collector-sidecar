@@ -27,6 +27,9 @@ class gcs::install {
     Package { provider => 'dpkg', }
   }
 
+  file { $package:
+    ensure => absent,
+  }->
   exec { 'retrieve_gcs':
     command => "/usr/bin/wget -q ${::gcs::download_url} -O ${package}",
     creates => "${package}",
@@ -34,9 +37,6 @@ class gcs::install {
   package { 'graylog-collector-sidecar':
     ensure => present,
     source => "${package}",
-  }->
-  file { $package:
-    ensure => absent,
   }
 
 }
