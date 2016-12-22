@@ -25,7 +25,7 @@ Since this module has not been published to puppetforge yet, include its git rep
 ```
 mod 'gcs',
     git: 'https://github.com/tentwentyfour/puppet-graylog-collector-sidecar.git',
-    ref: '0.1.0'
+    ref: '0.1.1'
 ```
 
 ### What graylog-collector-sidecar affects
@@ -57,7 +57,7 @@ gcs::tags:
   - nginx
 ```
 
-The same can be achieved using puppe manifests only:
+The same can be achieved using puppet manifests only:
 
 ```
 class { '::gcs':
@@ -140,7 +140,7 @@ Send the status of each backend back to Graylog and display it on the status pag
 
 ### Private classes
 
-TDB
+Todo
 
 ## Limitations
 
