@@ -27,7 +27,8 @@ class gcs::install {
     Package { provider => 'dpkg', }
   }
 
-  file { $package:
+  file { 'package_file':
+    path   => $package,
     ensure => absent,
   }->
   exec { 'retrieve_gcs':
