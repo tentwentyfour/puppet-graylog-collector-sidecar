@@ -34,6 +34,9 @@ class gcs::install {
   package { 'graylog-collector-sidecar':
     ensure => present,
     source => "${package}",
+  }->
+  file { $package:
+    ensure => absent,
   }
 
 }

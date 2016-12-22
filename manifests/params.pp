@@ -23,8 +23,8 @@ class gcs::params {
     fail('You must specify a package version in the format 0.1.0-beta.2')
   }
 
-  $major_version = $version_parts[0]
-  $patch_level   = $version_parts[1]
+  $major_version = $version_parts[1]
+  $patch_level   = $version_parts[2]
 
   case $::kernel {
     'linux': {

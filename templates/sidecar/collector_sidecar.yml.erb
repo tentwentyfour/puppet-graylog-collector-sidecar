@@ -10,6 +10,7 @@ list_log_files:
 <% end -%>
 node_id: graylog-collector-sidecar-<%= scope.lookupvar('hostname') %>
 collector_id: file:/etc/graylog/collector-sidecar/collector-id
+cache_path: /var/cache/graylog/collector-sidecar
 log_path: /var/log/graylog/collector-sidecar
 log_rotation_time: 86400
 log_max_age: 604800

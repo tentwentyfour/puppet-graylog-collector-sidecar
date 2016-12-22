@@ -99,7 +99,7 @@ class { 'gcs':
 }
 ```
 
-** Parameters within `gcs`**
+**Parameters within `gcs`**
 
 ##### `ensure`
 Valid values are running or stopped.
@@ -136,6 +136,7 @@ Ignore errors when the REST API was started with a self-signed certificate.
 
 ##### `send_status`
 Send the status of each backend back to Graylog and display it on the status page for the host.
+
 
 ### Private classes
 
