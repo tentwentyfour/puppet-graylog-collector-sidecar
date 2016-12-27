@@ -28,6 +28,7 @@ class gcs::service {
     service { $service:
       ensure     => $::gcs::ensure,
       enable     => $::gcs::enable,
+      provider   => $::gcs::service_provider,
       hasstatus  => true,
       hasrestart => true,
     }

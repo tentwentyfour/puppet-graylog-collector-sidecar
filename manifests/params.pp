@@ -28,7 +28,7 @@ class gcs::params {
 
   case $::kernel {
     'linux': {
-      # OK, no code but supported
+      # OK, no code but supported kernel
     }
 
     default: {
@@ -36,6 +36,8 @@ class gcs::params {
     }
   }
 
+  # On Debian, auto-detected 'debian' service_provider will attempt to start service using non-existent init.d script first.
+  $service_provider = 'systemd'
   $conf_dir         = '/etc/graylog/collector-sidecar'
   $log_files        = [ '/var/log' ]
   $service          = 'collector-sidecar'

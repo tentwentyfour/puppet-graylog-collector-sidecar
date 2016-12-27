@@ -68,6 +68,7 @@ class gcs(
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
   $send_status      = $gcs::params::send_status,
+  $service_provider = $gcs::params::service_provider,
 ) inherits ::gcs::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
