@@ -37,6 +37,7 @@ class gcs::params {
   }
 
   # On Debian, auto-detected 'debian' service_provider will attempt to start service using non-existent init.d script first.
+  # See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775795
   $service_provider = 'systemd'
   $conf_dir         = '/etc/graylog/collector-sidecar'
   $log_files        = [ '/var/log' ]
