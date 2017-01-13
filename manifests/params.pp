@@ -16,19 +16,21 @@
 #
 class gcs::params {
 
-  $package_version  = '0.1.0-beta.2'
-  $version_parts = "${package_version}".match(/(\d\.\d)\.(\d.*)/)
+  $package_version  = '0.1.0-beta.3'
+  $version_parts = "${package_version}".match(/(\d)\.(\d)\.(\d)(-+.*)/)
 
   if !is_array($version_parts) {
     fail('You must specify a package version in the format 0.1.0-beta.2')
   }
 
   $major_version = $version_parts[1]
-  $patch_level   = $version_parts[2]
+  $minor_version = $version_parts[2]
+  $patch_level   = $version_parts[3]
+  $extra_level   = $version_parts[4]
 
   case $::kernel {
     'linux': {
-      # OK, no code but supported kernel
+      # OK, no code yet, but this is a supported kernel
     }
 
     default: {
@@ -47,7 +49,7 @@ class gcs::params {
   $send_status      = true
 
   $download_url = $::osfamily ? {
-    'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${patch_level}/collector-sidecar_${major_version}.0-1_${::architecture}.deb",
+    'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar_${major_version}.${minor_version}-${patch_level}_${::architecture}.deb",
     # 'redhat' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${patch_level}/collector-sidecar_${major_version}.0-1.${::architecture}.rpm",
     default  => fail("${::osfamily} is not supported!"),
   }
