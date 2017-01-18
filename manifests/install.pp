@@ -16,22 +16,39 @@
 #
 class gcs::install {
 
-  $tmp_location = '/tmp'
-  $package  = "${tmp_location}/graylog-collector-sidecar.${::gcs::package_version}.deb"
-
   if $module_name != $caller_module_name {
     fail("gcs::install is a private class of the module gcs, you're not permitted to use it.")
   }
+
+  $version_parts = "${::gcs::package_version}".match(/(\d)\.(\d)\.(\d)(-+.*)/)
+
+  if !is_array($version_parts) {
+    fail("There was a problem parsing the package_version ${::gcs::package_version}.")
+  }
+
+  $major_version = $version_parts[1]
+  $minor_version = $version_parts[2]
+  $patch_level   = $version_parts[3]
+  $extra_level   = $version_parts[4]
+
+  $download_url = $::osfamily ? {
+    'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar_${major_version}.${minor_version}.${patch_level}-1_${::architecture}.deb",
+    default  => fail("${::osfamily} is not supported!"),
+  }
+
+  $package  = "${::gcs::params::tmp_location}/collector-sidecar.${::gcs::package_version}.deb"
 
   if $::osfamily == 'debian' {
     Package { provider => 'dpkg', }
   }
 
+  # It would be better to compare a hash of the file to a newly downloaded one and replace
+  # it, if necessary.
   exec { 'retrieve_gcs':
-    command => "/usr/bin/wget -q ${::gcs::download_url} -O ${package}",
+    command => "/usr/bin/wget -q ${download_url} -O ${package}",
     creates => "${package}",
   }->
-  package { 'graylog-collector-sidecar':
+  package { 'collector-sidecar':
     ensure => present,
     source => "${package}",
   }

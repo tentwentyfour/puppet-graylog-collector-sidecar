@@ -110,10 +110,6 @@ Whether to enable the collector-sidecar service.
 ##### `manage_service`
 Whether or not to manage (install, launch/stop) the collector-sidecar service.
 
-##### `download_url`
-URL to download package from.
-By default, the package is downloaded from the graylog collector github release page.
-
 ##### `package_version`
 Which package version to install.
 
@@ -136,6 +132,15 @@ Ignore errors when the REST API was started with a self-signed certificate.
 
 ##### `send_status`
 Send the status of each backend back to Graylog and display it on the status page for the host.
+
+##### `service_provider`
+Service provider to use. Defaults to systemd on linux.
+
+##### `filebeat_enable`
+Whether to enable the filebeat service. Default: true
+
+##### `nxlog_enable`
+Whether to enable the nxlog service. Default: false
 
 
 ### Private classes

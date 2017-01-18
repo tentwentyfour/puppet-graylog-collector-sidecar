@@ -29,6 +29,8 @@ class gcs::config {
   $update_interval  = $::gcs::update_interval
   $tls_skip_verify  = $::gcs::tls_skip_verify
   $send_status      = $::gcs::send_status
+  $filebeat_enable  = $::gcs::filebeat_enable
+  $nxlog_enable     = $::gcs::nxlog_enable
 
   file { "${conf_dir}/collector_sidecar.yml":
     ensure    => file,

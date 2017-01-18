@@ -1,4 +1,4 @@
-# WARNING: Maintained by Puppet, manual changes will be lost!
+# WARNING: This file is maintained by Puppet, manual changes will be lost!
 
 server_url: <%= @server_url %>
 update_interval: <%= @update_interval %>
@@ -20,10 +20,10 @@ tags:
 <% end -%>
 backends:
   - name: nxlog
-    enabled: false
+    enabled: <%= @nxlog_enable %>
     binary_path: /usr/bin/nxlog
     configuration_path: /etc/graylog/collector-sidecar/generated/nxlog.conf
   - name: filebeat
-    enabled: true
+    enabled: <%= @filebeat_enable %>
     binary_path: /usr/bin/filebeat
     configuration_path: /etc/graylog/collector-sidecar/generated/filebeat.yml

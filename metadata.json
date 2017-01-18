@@ -1,6 +1,6 @@
 {
   "name": "graylog-collector-sidecar",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "TenTwentyFour S.à r.l.",
   "summary": "Install and configure Graylog-Collector-Sidecar",
   "license": "Apache-2.0",
@@ -33,14 +33,12 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "14.04",
         "16.04"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7",
         "8"
       ]
     }

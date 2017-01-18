@@ -13,10 +13,6 @@
 # [*manage_service*]
 #   Whether or not to manage (install, launch/stop) the collector-sidecar service.
 #
-# [*download_url*]
-#   URL to download package from.
-#   By default, the package is downloaded from the graylog collector github release page.
-#
 # [*package_version*]
 #   Which package version to install.
 #
@@ -40,6 +36,15 @@
 # [*send_status*]
 #   Send the status of each backend back to Graylog and display it on the status page for the host.
 #
+# [*service_provider*]
+#   Service provider to use. Defaults to systemd on linux.
+#
+# [*filebeat_enable*]
+#    Whether to enable the filebeat service. Default: true
+#
+# [*nxlog_enable*]
+#    Whether to enable the nxlog service. Default: false
+#
 # === Examples
 #
 #  include ::gcs
@@ -60,27 +65,44 @@ class gcs(
   $ensure           = running,
   $enable           = true,
   $manage_service   = true,
-  $download_url     = $gcs::params::download_url,
-  $package_version  = $gcs::params::package_version,
   $server_url       = undef,
   $tags             = [],
+  $package_version  = $gcs::params::package_version,
   $log_files        = $gcs::params::log_files,
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
   $send_status      = $gcs::params::send_status,
   $service_provider = $gcs::params::service_provider,
+  $filebeat_enable  = $gcs::params::filebeat_enable,
+  $nxlog_enable     = $gcs::params::nxlog_enable,
 ) inherits ::gcs::params {
 
-  validate_re($ensure, [ '^running$', '^stopped$' ],
-    "${ensure} isn't supported. Valid values are 'running' and 'stopped'.")
+  validate_re(
+    $ensure,
+    [ '^running$', '^stopped$' ],
+    "${ensure} isn't supported. Valid values are 'running' and 'stopped'."
+  )
+
+  validate_re(
+    $package_version,
+    '^(\d)\.(\d)\.(\d)(-+.*)$',
+    'You must specify a package version in the semver format 0.1.0-beta.2'
+  )
+
+  validate_bool($tls_skip_verify)
+  validate_bool($send_status)
   validate_bool($enable)
   validate_bool($manage_service)
+  validate_bool($filebeat_enable)
+  validate_bool($nxlog_enable)
+
   validate_array($tags)
   validate_absolute_path($log_files)
+  validate_absolute_path($tmp_location)
   validate_integer($update_interval)
 
   if !is_string($server_url) {
-    fail('server_url must be set.')
+    fail('server_url must be set!')
   }
 
   anchor { '::gcs::begin': }
