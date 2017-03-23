@@ -33,13 +33,22 @@ class gcs::install {
 
   $download_url = $::osfamily ? {
     'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar_${major_version}.${minor_version}.${patch_level}-1_${::architecture}.deb",
+    'redhat' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar-${major_version}.${minor_version}.${patch_level}-1.${::architecture}.rpm",
     default  => fail("${::osfamily} is not supported!"),
   }
 
-  $package  = "${::gcs::params::tmp_location}/collector-sidecar.${::gcs::package_version}.deb"
+  $package = $::osfamily ? {
+    'debian' => "${::gcs::params::tmp_location}/collector-sidecar.${::gcs::package_version}.deb",
+    'redhat' => "${::gcs::params::tmp_location}/collector-sidecar.${::gcs::package_version}.rpm",
+    default  => fail("${::osfamily} is not supported!"),
+  }
 
   if $::osfamily == 'debian' {
     Package { provider => 'dpkg', }
+  }
+
+  if $::osfamily == 'redhat' {
+    Package { provider => 'rpm', }
   }
 
   # It would be better to compare a hash of the file to a newly downloaded one and replace
