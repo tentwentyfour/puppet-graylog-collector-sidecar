@@ -45,9 +45,7 @@ class gcs::install {
 
   if $::osfamily == 'debian' {
     Package { provider => 'dpkg', }
-  }
-
-  if $::osfamily == 'redhat' {
+  } elsif $::osfamily == 'redhat' {
     Package { provider => 'rpm', }
   }
 
@@ -56,10 +54,12 @@ class gcs::install {
   exec { 'retrieve_gcs':
     command => "/usr/bin/wget -q ${download_url} -O ${package}",
     creates => "${package}",
-  }->
+  }
+
   package { 'collector-sidecar':
-    ensure => present,
-    source => "${package}",
+    ensure  => present,
+    source  => "${package}",
+    require => Exec['retrieve_gcs'],
   }
 
 }

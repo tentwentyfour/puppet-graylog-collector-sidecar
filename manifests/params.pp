@@ -18,18 +18,28 @@ class gcs::params {
 
   $package_version  = '0.1.0-beta.3'
 
-  case $::kernel {
-    'linux': {
-      case $::osfamily {
-        default: {
-          $service_provider = 'systemd'
-        }
-      }
+  if $::operatingsystem == 'Ubuntu' {
+    if versioncmp($::operatingsystemrelease, '8.04') < 1 {
+      fail("Unsupported version ${::operatingsystemrelease}")
+    } elsif versioncmp($::operatingsystemrelease, '15.04') < 0 {
+      $service_provider = 'upstart'
+    } else {
+      $service_provider = 'systemd'
     }
-
-    default: {
-      fail("Your plattform ${::osfamily} is not supported, yet.")
+  } elsif $::operatingsystem == 'Debian' {
+    if versioncmp($::operatingsystemrelease, '8.0') < 0 {
+      fail("Unsupported version ${::operatingsystemrelease}")
+    } else {
+      $service_provider = 'systemd'
     }
+  } elsif $::operatingsystem =~ /CentOS|RedHat/ {
+    if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+      fail("Unsupported version ${::operatingsystemrelease}")
+    } else {
+      $init_style  = 'systemd'
+    }
+  } else {
+    fail("Your plattform ${::operatingsystem} is not supported, yet.")
   }
 
   # On Debian, auto-detected 'debian' service_provider will attempt to start service using non-existent init.d script first.
