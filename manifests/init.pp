@@ -101,9 +101,12 @@ class gcs(
   validate_absolute_path($tmp_location)
   validate_integer($update_interval)
 
-  if !is_string($server_url) {
+  if $server_url == undef {
+    fail('server_url must be set!')
+  } elsif !is_string($server_url) {
     fail('server_url must be set!')
   }
+
 
   anchor { '::gcs::begin': }
   -> class { '::gcs::install': }
