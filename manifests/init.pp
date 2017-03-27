@@ -107,7 +107,6 @@ class gcs(
     fail('server_url must be set!')
   }
 
-
   anchor { '::gcs::begin': }
   -> class { '::gcs::install': }
   -> class { '::gcs::config': }
