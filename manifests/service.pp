@@ -21,9 +21,16 @@ class gcs::service {
 
   if $manage_service {
 
-    exec { 'install_gcs_service':
-      command => '/usr/bin/graylog-collector-sidecar -service install',
-      creates => '/etc/systemd/system/collector-sidecar.service',
+    if $::gcs::service_provider == 'systemd' {
+      exec { 'install_gcs_service':
+        command => '/usr/bin/graylog-collector-sidecar -service install',
+        creates => '/etc/systemd/system/collector-sidecar.service',
+      }
+    } elsif $::gcs::service_provider == 'upstart'{
+      exec { 'install_gcs_service':
+        command => '/usr/bin/graylog-collector-sidecar -service install',
+        creates => '/etc/init/collector-sidecar.conf',
+      }
     }~>
     service { $service:
       ensure     => $::gcs::ensure,
