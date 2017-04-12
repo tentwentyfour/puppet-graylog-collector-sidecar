@@ -16,7 +16,8 @@
 #
 class gcs::params {
 
-  $package_version  = '0.1.0-beta.3'
+  $package_version  = '0.1.0'
+  $package_revision = 1
 
   if $::operatingsystem == 'Ubuntu' {
     if versioncmp($::operatingsystemrelease, '8.04') < 1 {

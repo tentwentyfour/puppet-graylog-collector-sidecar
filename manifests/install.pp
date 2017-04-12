@@ -20,20 +20,20 @@ class gcs::install {
     fail("gcs::install is a private class of the module gcs, you're not permitted to use it.")
   }
 
-  $version_parts = "${::gcs::package_version}".match(/(\d)\.(\d)\.(\d)(-+.*)/)
+  $version_parts = "${::gcs::package_version}".match(/(\d)\.(\d)\.(\d)(-+.*)?/)
 
   if !is_array($version_parts) {
     fail("There was a problem parsing the package_version ${::gcs::package_version}.")
   }
 
-  $major_version = $version_parts[1]
-  $minor_version = $version_parts[2]
-  $patch_level   = $version_parts[3]
-  $extra_level   = $version_parts[4]
+  $major_version    = $version_parts[1]
+  $minor_version    = $version_parts[2]
+  $patch_level      = $version_parts[3]
+  $version_suffix   = $version_parts[4]
 
   $download_url = $::osfamily ? {
-    'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar_${major_version}.${minor_version}.${patch_level}-1_${::architecture}.deb",
-    'redhat' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${extra_level}/collector-sidecar-${major_version}.${minor_version}.${patch_level}-1.${::architecture}.rpm",
+    'debian' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${version_suffix}${extra_level}/collector-sidecar_${major_version}.${minor_version}.${version_suffix}-${::gcs::package_revision}_${::architecture}.deb",
+    'redhat' => "https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${version_suffix}${extra_level}/collector-sidecar-${major_version}.${minor_version}.${version_suffix}-${::gcs::package_revision}.${::architecture}.rpm",
     default  => fail("${::osfamily} is not supported!"),
   }
 

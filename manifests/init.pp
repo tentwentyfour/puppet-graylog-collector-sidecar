@@ -16,8 +16,12 @@
 # [*package_version*]
 #   Which package version to install.
 #
+# [*package_revision*]
+#   Which package revision to install. Defaults to 1 (For most versions there is only one
+#   revision.)
+#
 # [*server_url*]
-#   URL to the api of your graylog server. Collector-sidecar will fetch configurations.
+#   URL to the API of your graylog server. Collector-sidecar will fetch configurations.
 #   from this host based on the configured tags.
 #
 # [*tags*]
@@ -68,6 +72,7 @@ class gcs(
   $server_url       = undef,
   $tags             = [],
   $package_version  = $gcs::params::package_version,
+  $package_revision = $gcs::params::package_revision,
   $log_files        = $gcs::params::log_files,
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
@@ -85,8 +90,8 @@ class gcs(
 
   validate_re(
     $package_version,
-    '^(\d)\.(\d)\.(\d)(-+.*)$',
-    'You must specify a package version in the semver format 0.1.0-beta.2'
+    '^(\d)\.(\d)\.(\d)(-+.*)?$',
+    'You must specify a package version in the semver format 0.1.0 or 0.1.0-beta.2'
   )
 
   validate_bool($tls_skip_verify)
@@ -100,6 +105,7 @@ class gcs(
   validate_absolute_path($log_files)
   validate_absolute_path($tmp_location)
   validate_integer($update_interval)
+  validate_integer($package_revision)
 
   if $server_url == undef {
     fail('server_url must be set!')

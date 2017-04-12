@@ -16,7 +16,7 @@ Installs and configures the collector-sidecar package for graylog.
 
 ## Description
 
-This module can be used to install and configure the Graylog Collector Sidecar. (http://docs.graylog.org/en/2.1/pages/collector_sidecar.html)
+This module can be used to install and configure the Graylog Collector Sidecar. (http://docs.graylog.org/en/2.2/pages/collector_sidecar.html)
 
 ## Setup
 
@@ -25,7 +25,7 @@ Since this module has not been published to puppetforge yet, include its git rep
 ```
 mod 'gcs',
     git: 'https://github.com/tentwentyfour/puppet-graylog-collector-sidecar.git',
-    ref: '0.1.1'
+    ref: '0.2.0'
 ```
 
 ### What graylog-collector-sidecar affects
@@ -113,6 +113,9 @@ Whether or not to manage (install, launch/stop) the collector-sidecar service.
 ##### `package_version`
 Which package version to install.
 
+##### `package_revision`
+Which package revision to install. Defaults to 1 (For most versions there is only one revision.)
+
 ##### `server_url`
 URL to the api of your graylog server. Collector-sidecar will fetch configurations.
 from this host based on the configured tags.
@@ -149,9 +152,9 @@ Todo
 
 ## Limitations
 
-- Currently only supports Beats (filebeat) backend and only Debian-based OSs.
+- Currently only supports Beats (filebeat) backend.
+- Only supports Debian (and derivates, e.g. Ubuntu) as well as RedHat (and derivates, e.g. CentOS)
 - Missing specs!
-- Package versions are not fully configurable yet.
 
 ## Development
 
