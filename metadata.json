@@ -1,6 +1,6 @@
 {
   "name": "graylog-collector-sidecar",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "TenTwentyFour S.à r.l.",
   "summary": "Install and configure Graylog-Collector-Sidecar",
   "license": "Apache-2.0",
