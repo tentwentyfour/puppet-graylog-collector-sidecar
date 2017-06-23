@@ -66,20 +66,30 @@
 # David Raison <david@tentwentyfour.lu>
 #
 class gcs(
-  $ensure           = running,
-  $enable           = true,
-  $manage_service   = true,
-  $server_url       = undef,
-  $tags             = [],
+  $ensure           = $gcs::params::ensure,
+  $enable           = $gcs::params::enable,
+  $manage_service   = $gcs::params::manage_service,
+  $server_url       = $gcs::params::server_url,
+  $tags             = $gcs::params::tags,
   $package_version  = $gcs::params::package_version,
   $package_revision = $gcs::params::package_revision,
   $log_files        = $gcs::params::log_files,
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
   $send_status      = $gcs::params::send_status,
-  $service_provider = $gcs::params::service_provider,
+  $conf_dir         = $gcs::params::conf_dir,
+  $service          = $gcs::params::service,
   $filebeat_enable  = $gcs::params::filebeat_enable,
   $nxlog_enable     = $gcs::params::nxlog_enable,
+  $manage_cache_dir = $gcs::params::manage_cache_dir,
+  $puppet_cache     = $gcs::params::puppet_cache,
+  $archive_dir      = $gcs::params::archive_dir,
+  $checksum_type    = $gcs::params::checksum_type,
+  $service_provider = $gcs::params::service_provider,
+  $package_provider = $gcs::params::package_provider,
+  $checksum         = $gcs::params::checksum,
+  $download_package = $gcs::params::download_package,
+  $download_url     = $gcs::params::download_url,
 ) inherits ::gcs::params {
 
   validate_re(
@@ -89,28 +99,34 @@ class gcs(
   )
 
   validate_re(
+    $package_provider,
+    [ '^dpkg$', '^rpm$' ],
+    "${package_provider} isn't supported. Valid values are 'dpkg' and 'rpm'."
+  )
+
+  validate_re(
+    $checksum_type,
+    [ '^md5$', '^sha256$' ],
+    "${checksum_type} isn't supported. Valid values are 'md5' and 'sha256'."
+  )
+
+  validate_re(
     $package_version,
     '^(\d)\.(\d)\.(\d)(-+.*)?$',
     'You must specify a package version in the semver format 0.1.0 or 0.1.0-beta.2'
   )
 
-  validate_bool($tls_skip_verify)
-  validate_bool($send_status)
-  validate_bool($enable)
-  validate_bool($manage_service)
-  validate_bool($filebeat_enable)
-  validate_bool($nxlog_enable)
-
+  validate_bool($enable,$manage_service,$tls_skip_verify,$send_status,$filebeat_enable,$nxlog_enable,$manage_cache_dir)
+  validate_string($checksum,$download_url)
   validate_array($tags)
-  validate_absolute_path($log_files)
-  validate_absolute_path($tmp_location)
+  validate_absolute_path($log_files,$conf_dir,$puppet_cache,$archive_dir,$download_package)
   validate_integer($update_interval)
   validate_integer($package_revision)
 
   if $server_url == undef {
     fail('server_url must be set!')
   } elsif !is_string($server_url) {
-    fail('server_url must be set!')
+    fail("\$gcs::server_url must be a valid url like http://127.0.0.1:9000/api/")
   }
 
   anchor { '::gcs::begin': }

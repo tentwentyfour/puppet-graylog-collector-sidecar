@@ -2,6 +2,9 @@
 #
 # Handles service initialization for the collector-sidecar
 #
+# On Debian, auto-detected 'debian' service_provider will attempt to start service using non-existent init.d script first.
+# See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775795
+#
 # === Parameters
 #
 # This class does not provide any parameters.
@@ -16,29 +19,12 @@
 #
 class gcs::service {
 
-  $manage_service = $::gcs::manage_service
-  $service        = $::gcs::params::service
-
-  if $manage_service {
-
-    if $::gcs::service_provider == 'systemd' {
-      exec { 'install_gcs_service':
-        command => '/usr/bin/graylog-collector-sidecar -service install',
-        creates => '/etc/systemd/system/collector-sidecar.service',
-      }
-    } elsif $::gcs::service_provider == 'upstart'{
-      exec { 'install_gcs_service':
-        command => '/usr/bin/graylog-collector-sidecar -service install',
-        creates => '/etc/init/collector-sidecar.conf',
-      }
-    }~>
-    service { $service:
-      ensure     => $::gcs::ensure,
-      enable     => $::gcs::enable,
-      provider   => $::gcs::service_provider,
-      hasstatus  => true,
-      hasrestart => true,
-    }
+  service { $::gcs::service:
+    ensure     => $::gcs::ensure,
+    enable     => $::gcs::enable,
+    provider   => $::gcs::service_provider,
+    hasstatus  => true,
+    hasrestart => true,
   }
 
 }

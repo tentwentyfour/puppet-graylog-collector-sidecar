@@ -21,8 +21,6 @@ class gcs::config {
   }
 
   $conf_dir         = $::gcs::params::conf_dir
-  $user             = $::gcs::sidecar_user
-  $group            = $::gcs::sidecar_group
   $server_url       = $::gcs::server_url
   $tags             = $::gcs::tags
   $log_files        = $::gcs::log_files
@@ -34,8 +32,8 @@ class gcs::config {
 
   file { "${conf_dir}/collector_sidecar.yml":
     ensure    => file,
-    owner     => $::gcs::user,
-    group     => $::gcs::group,
+    owner     => root,
+    group     => root,
     mode      => '0640',
     content   => template("${module_name}/sidecar/collector_sidecar.yml.erb"),
     show_diff => true,
