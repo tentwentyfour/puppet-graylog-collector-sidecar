@@ -1,0 +1,10 @@
+2016-06-23 PR: https://github.com/tentwentyfour/puppet-graylog-collector-sidecar/pull/6
+- Added verification of downloaded package with https://github.com/lwf/puppet-remote_file, included as new dependency.
+- Download packages to archive directory, /var/cache/puppet/archives by default.
+- Added beaker (albeit somewhat minimal) and puppet-rspec tests.
+- Moved most parameters to params.pp.
+- Added some new (configurable) parameters.
+- Added ruby 2.4 to travis.
+- Prepared init.pp for puppet4 and puppet strings.
+- Initialized changelog.
+- Updated README.

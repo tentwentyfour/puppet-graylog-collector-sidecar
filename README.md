@@ -102,42 +102,43 @@ class { 'gcs':
 **Parameters within `gcs`**
 
 ##### `ensure`
-Valid values are running or stopped.
+Valid values are running or stopped. Default: running
 
 ##### `enable`
-Whether to enable the collector-sidecar service.
+Whether to enable the collector-sidecar service. Default: true
 
-##### `manage_service`
-Whether or not to manage (install, launch/stop) the collector-sidecar service.
-
-##### `package_version`
-Which package version to install.
-
-##### `package_revision`
-Which package revision to install. Defaults to 1 (For most versions there is only one revision.)
+##### `install_service`
+Whether or not to install the collector-sidecar service. Default: true
 
 ##### `server_url`
-URL to the api of your graylog server. Collector-sidecar will fetch configurations.
-from this host based on the configured tags.
+URL to the api of your graylog server. Collector-sidecar will fetch configurations from this host based on the configured tags. Default: undef
 
 ##### `tags`
-Tags for this host
+Tags for this host. Default: []
+
+##### `package_version`
+Which package version to install. Default: 0.1.0
+
+##### `package_revision`
+Which package revision to install. Default: 1 (For most versions there is only one revision.)
 
 ##### `log_files`
-Location of log files to index and report to the Graylog server.
+Location of log files to index and report to the Graylog server. Default: ['/var/log']
 
 ##### `update_interval`
-The interval in seconds the sidecar will fetch new configurations from the Graylog server.
-Default is set to 10 in params.
+The interval in seconds the sidecar will fetch new configurations from the Graylog server. Default: 10.
 
 ##### `tls_skip_verify`
-Ignore errors when the REST API was started with a self-signed certificate.
+Ignore errors when the REST API was started with a self-signed certificate. Default: false
 
 ##### `send_status`
-Send the status of each backend back to Graylog and display it on the status page for the host.
+Send the status of each backend back to Graylog and display it on the status page for the host. Default: false
 
-##### `service_provider`
-Service provider to use. Defaults to systemd on linux.
+##### `conf_dir`
+Specify the configuration directory for collector-sidecar. Default: /etc/graylog/collector-sidecar
+
+##### `service`
+Specify the service name for collector-sidecar. Default: collector-sidecar
 
 ##### `filebeat_enable`
 Whether to enable the filebeat service. Default: true
@@ -145,6 +146,47 @@ Whether to enable the filebeat service. Default: true
 ##### `nxlog_enable`
 Whether to enable the nxlog service. Default: false
 
+##### `manage_cache_dir`
+Whether to create the archive directory for the downloaded package. Default: true
+
+##### `puppet_cache`
+Specify the archives directory parent directory. Default: /var/cache/puppet
+
+##### `archive_dir`
+Specify the archives directory. Default: "${puppet_cache}/archives"
+
+##### `checksum_type`
+Specify the checksum type. Default: 'sha256'
+
+##### `service_provider`
+Service provider to use. Default: Depends on your operating system.
+
+- **Ubuntu 15.04**: `upstart`
+- **Ubuntu 16.04**: `systemd`
+- **Debian**: `systemd`
+- **Red Hat**: `systemd`
+- **CentOS**: `systemd`
+
+##### `package_provider`
+Package provider to use. Default: Depends on your operating system family.
+
+- **Debian**: `dpkg`
+- **Red Hat**: `rpm`
+
+##### `checksum`
+Specify the checksum of the downloaded package. Default: Depends on your operating system.
+
+##### `download_package`
+Specify where to download the collector-sidecar package. Default: Depends on your operating system family.
+
+- **Debian**: `${archive_dir}/collector-sidecar.${package_version}.deb`
+- **Red Hat**: `${archive_dir}/collector-sidecar.${package_version}.rpm`
+
+##### `download_url`
+The URL from which the package will be downloaded. Default: Depends on your operating system family.
+
+- **Debian**: `https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${version_suffix}/collector-sidecar_${major_version}.${minor_version}.${patch_level}${version_suffix}-${package_revision}_${::architecture}.deb`
+- **Red Hat**: `https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${version_suffix}/collector-sidecar-${major_version}.${minor_version}.${patch_level}${version_suffix}-${package_revision}.${::architecture}.rpm`
 
 ### Private classes
 
@@ -154,7 +196,6 @@ Todo
 
 - Currently only supports Beats (filebeat) backend.
 - Only supports Debian (and derivates, e.g. Ubuntu) as well as RedHat (and derivates, e.g. CentOS)
-- Missing specs!
 
 ## Development
 
