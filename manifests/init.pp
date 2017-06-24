@@ -1,74 +1,74 @@
-# == Class: gcs
+# Class: gcs
+# ===========================
 #
-# This module installs graylog collector-sidecar, manages its service and
+# @summary The gcs module installs graylog collector-sidecar, manages its service and configuration.
 #
-# === Parameters
+# @example Declaring the class
+#   { '::gcs': server_url => 'http://127.0.0.1:9000/api/' }
+#   In hiera, you can set configuration variables:
+#   gcs::server_url: http://my.graylog.server:9000/api
+#   gcs::update_interval: 15
+#   gcs::tags:
+#     - linux
+#     - icinga2
+#     - nginx
 #
-# [*ensure*]
-#   Valid values are running or stopped.
+# @param ensure Enum['running', 'stopped'] Whether the collector-service should be running or stopped.
 #
-# [*enable*]
-#   Whether to enable the collector-sidecar service.
+# @param enable Boolean Whether to enable the collector-service.
 #
-# [*manage_service*]
-#   Whether or not to manage (install, launch/stop) the collector-sidecar service.
+# @param install_service Boolean Whether to install the collector-service.
 #
-# [*package_version*]
-#   Which package version to install.
+# @param server_url String The URL to the API of your Graylog server.
 #
-# [*package_revision*]
-#   Which package revision to install. Defaults to 1 (For most versions there is only one
-#   revision.)
+# @param tags Array[String] The tags which are used to define which configurations the host should receive.
 #
-# [*server_url*]
-#   URL to the API of your graylog server. Collector-sidecar will fetch configurations.
-#   from this host based on the configured tags.
+# @param package_version Enum['^(\d)\.(\d)\.(\d)(-+.*)?$'] Which package version to install.
 #
-# [*tags*]
-#   Tags for this host
+# @param package_revision Integer[1] Which package version to install.
 #
-# [*log_files*]
-#   Location of log files to index and report to the Graylog server.
+# @param log_files [Array[Stdlib::Absolutepath]] Send a directory listing to Graylog. This can also be a list of directories.
 #
-# [*update_interval*]
-#   The interval in seconds the sidecar will fetch new configurations from the Graylog server.
-#   Default is set to 10 in params.
+# @param update_interval Integer[1] The interval in seconds the sidecar will fetch new configurations from the Graylog server.
 #
-# [*tls_skip_verify*]
-#   Ignore errors when the REST API was started with a self-signed certificate.
+# @param tls_skip_verify Boolean Ignore errors when the REST API was started with a self-signed certificate.
 #
-# [*send_status*]
-#   Send the status of each backend back to Graylog and display it on the status page for the host.
+# @param send_status Boolean Send the status of each backend back to Graylog and display it on the status page for the host.
 #
-# [*service_provider*]
-#   Service provider to use. Defaults to systemd on linux.
+# @param conf_dir [Stdlib::Absolutepath] Specify the configuration directory for collector-sidecar.
 #
-# [*filebeat_enable*]
-#    Whether to enable the filebeat service. Default: true
+# @param service String The service name.
 #
-# [*nxlog_enable*]
-#    Whether to enable the nxlog service. Default: false
+# @param filebeat_enable Boolean Whether to enable the filebeat service.
 #
-# === Examples
+# @param nxlog_enable Boolean Whether to enable the nxlog service.
 #
-#  include ::gcs
+# @param manage_cache_dir Boolean Whether to create the archive directory for the downloaded package.
 #
-# In hiera, you can set configuration variables:
-#  gcs::server_url: http://my.graylog.server:9000/api
-#  gcs::update_interval: 15
-#  gcs::tags:
-#    - linux
-#    - icinga2
-#    - nginx
+# @param puppet_cache [Stdlib::Absolutepath] The parent directory for the directory which holds the downloaded package.
+#
+# @param archive_dir [Stdlib::Absolutepath] The archives directory for the downloaded package.
+#
+# @param checksum_type Enum['md5', 'sha256'] The checksum type to validate the downloaded package.
+#
+# @param service_provider String The service provider to use.
+#
+# @param package_provider Enum['dpkg', 'rpm'] The package provider to use for installing collector-sidecar with a source parameter.
+#
+# @param checksum String The checksum of the downloaded package.
+#
+# @param download_package [Stdlib::Absolutepath] Set where to save the downloaded collector-sidecar package.
+#
+# @param download_url Optional[String] Provide your own URL from which the package will be downloaded.
 #
 # === Authors
 #
 # David Raison <david@tentwentyfour.lu>
 #
-class gcs(
+class gcs (
   $ensure           = $gcs::params::ensure,
   $enable           = $gcs::params::enable,
-  $manage_service   = $gcs::params::manage_service,
+  $install_service  = $gcs::params::install_service,
   $server_url       = $gcs::params::server_url,
   $tags             = $gcs::params::tags,
   $package_version  = $gcs::params::package_version,
@@ -116,7 +116,7 @@ class gcs(
     'You must specify a package version in the semver format 0.1.0 or 0.1.0-beta.2'
   )
 
-  validate_bool($enable,$manage_service,$tls_skip_verify,$send_status,$filebeat_enable,$nxlog_enable,$manage_cache_dir)
+  validate_bool($enable,$install_service,$tls_skip_verify,$send_status,$filebeat_enable,$nxlog_enable,$manage_cache_dir)
   validate_string($checksum,$download_url)
   validate_array($tags)
   validate_absolute_path($log_files,$conf_dir,$puppet_cache,$archive_dir,$download_package)

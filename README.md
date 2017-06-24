@@ -107,8 +107,8 @@ Valid values are running or stopped. Default: running
 ##### `enable`
 Whether to enable the collector-sidecar service. Default: true
 
-##### `manage_service`
-Whether or not to manage (install, launch/stop) the collector-sidecar service.  Default: true
+##### `install_service`
+Whether or not to install the collector-sidecar service. Default: true
 
 ##### `server_url`
 URL to the api of your graylog server. Collector-sidecar will fetch configurations from this host based on the configured tags. Default: undef
@@ -129,7 +129,7 @@ Location of log files to index and report to the Graylog server. Default: ['/var
 The interval in seconds the sidecar will fetch new configurations from the Graylog server. Default: 10.
 
 ##### `tls_skip_verify`
-Ignore errors when the REST API was started with a self-signed certificate.  Default: false
+Ignore errors when the REST API was started with a self-signed certificate. Default: false
 
 ##### `send_status`
 Send the status of each backend back to Graylog and display it on the status page for the host. Default: false
@@ -182,8 +182,8 @@ Specify where to download the collector-sidecar package. Default: Depends on you
 - **Debian**: `${archive_dir}/collector-sidecar.${package_version}.deb`
 - **Red Hat**: `${archive_dir}/collector-sidecar.${package_version}.rpm`
 
-##### `download_package`
-Specify which package to download. Default: Depends on your operating system family.
+##### `download_url`
+The URL from which the package will be downloaded. Default: Depends on your operating system family.
 
 - **Debian**: `https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${version_suffix}/collector-sidecar_${major_version}.${minor_version}.${patch_level}${version_suffix}-${package_revision}_${::architecture}.deb`
 - **Red Hat**: `https://github.com/Graylog2/collector-sidecar/releases/download/${major_version}.${minor_version}.${patch_level}${version_suffix}/collector-sidecar-${major_version}.${minor_version}.${patch_level}${version_suffix}-${package_revision}.${::architecture}.rpm`
