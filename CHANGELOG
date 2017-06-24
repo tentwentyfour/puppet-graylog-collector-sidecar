@@ -1,4 +1,4 @@
-2016-06-23 PR: https://github.com/tentwentyfour/puppet-graylog-collector-sidecar/pull/6
+2016-06-24 0.4.0 (Wim Bonthuis <wim@500k.nl>)
 - Added verification of downloaded package with https://github.com/lwf/puppet-remote_file, included as new dependency.
 - Download packages to archive directory, /var/cache/puppet/archives by default.
 - Added beaker (albeit somewhat minimal) and puppet-rspec tests.
