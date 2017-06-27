@@ -21,7 +21,7 @@ class gcs::params {
   $install_service  = true
   $server_url       = undef
   $tags             = []
-  $package_version  = '0.1.0'
+  $package_version  = '0.1.3'
   $package_revision = 1
   $log_files        = ['/var/log']
   $update_interval  = 10

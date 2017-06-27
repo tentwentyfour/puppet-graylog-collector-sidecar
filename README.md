@@ -7,8 +7,8 @@ Installs and configures the collector-sidecar package for graylog. [![Build Stat
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with graylog-collector-sidecar](#setup)
-    * [What graylog-collector-sidecar affects](#what-graylog-collector-sidecar-affects)
     * [Setup requirements](#setup-requirements)
+1. [What graylog-collector-sidecar affects](#what-graylog-collector-sidecar-affects)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -28,7 +28,12 @@ mod 'gcs',
     ref: '0.4.0'
 ```
 
-### What graylog-collector-sidecar affects
+### Setup requirements
+
+The module requires puppetlabs-stdlib, [puppet-remote_file](https://github.com/lwf/puppet-remote_file) and puppetlabs-apt on Debian-based OSs.
+
+
+## What graylog-collector-sidecar affects
 
 The graylog-collector-sidecar module manages the following things:
 
@@ -36,9 +41,6 @@ The graylog-collector-sidecar module manages the following things:
 * Graylog-collector-sidecar configuration file
 * Graylog-collector-sidecar service
 
-### Setup requirements
-
-The module requires puppetlabs-stdlib and puppetlabs-apt on Debian-based OSs.
 
 ## Usage
 
