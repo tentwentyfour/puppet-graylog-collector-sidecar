@@ -25,7 +25,7 @@ Since this module has not been published to puppetforge yet, include its git rep
 ```
 mod 'gcs',
     git: 'https://github.com/tentwentyfour/puppet-graylog-collector-sidecar.git',
-    ref: '0.4.0'
+    ref: '0.4.2'
 ```
 
 ### Setup requirements
