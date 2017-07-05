@@ -69,7 +69,7 @@ class gcs::install {
   }
 
   package { $::gcs::service:
-    ensure   => present,
+    ensure   => latest,
     source   => $::gcs::download_package,
     provider => $::gcs::package_provider,
     require  => Remote_file['retrieve_gcs'],
