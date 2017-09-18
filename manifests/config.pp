@@ -29,6 +29,7 @@ class gcs::config {
   $send_status      = $::gcs::send_status
   $filebeat_enable  = $::gcs::filebeat_enable
   $nxlog_enable     = $::gcs::nxlog_enable
+  $node_id_prefix   = $::gcs::node_id_prefix
 
   file { "${conf_dir}/collector_sidecar.yml":
     ensure    => file,

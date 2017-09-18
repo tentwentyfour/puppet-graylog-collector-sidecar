@@ -38,6 +38,7 @@ class gcs::params {
   $download_url     = undef
   $package_name     = undef
   $package_repo     = false
+  $node_id_prefix   = 'graylog-collector-sidecar-'
 
   if $::operatingsystem == 'Ubuntu' {
     if versioncmp($::operatingsystemrelease, '8.04') < 1 {

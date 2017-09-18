@@ -92,6 +92,7 @@ class gcs (
   $download_url     = $gcs::params::download_url,
   $package_name     = $gcs::params::package_name,
   $packgae_repo     = $gcs::params::package_repo,
+  $node_id_prefix   = $gcs::params::node_id_prefix,
 ) inherits ::gcs::params {
 
   validate_re(
