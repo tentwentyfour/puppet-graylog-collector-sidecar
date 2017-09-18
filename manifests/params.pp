@@ -60,7 +60,7 @@ class gcs::params {
       $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
       $download_package = "${archive_dir}/collector-sidecar.${package_version}.deb"
     }
-  } elsif $::operatingsystem =~ /CentOS|RedHat/ {
+  } elsif $::operatingsystem =~ /CentOS|RedHat|OracleLinux/ {
     if versioncmp($::operatingsystemrelease, '7.0') < 0 {
       fail("Unsupported version ${::operatingsystemrelease}")
     } else {
