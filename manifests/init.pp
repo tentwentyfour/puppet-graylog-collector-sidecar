@@ -90,6 +90,8 @@ class gcs (
   $checksum         = $gcs::params::checksum,
   $download_package = $gcs::params::download_package,
   $download_url     = $gcs::params::download_url,
+  $package_name     = $gcs::params::package_name,
+  $packgae_repo     = $gcs::params::package_repo,
 ) inherits ::gcs::params {
 
   validate_re(
