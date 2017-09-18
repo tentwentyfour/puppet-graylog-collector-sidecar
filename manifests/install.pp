@@ -38,7 +38,7 @@ class gcs::install {
       file { $::gcs::puppet_cache:
         ensure => 'directory',
         owner  => 'root',
-    t@github.com:ranzbak/puppet-graylog-collector-sidecar.git    group  => 'root',
+        group  => 'root',
         mode   => '0755',
       }
       file { $::gcs::archive_dir:
