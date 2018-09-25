@@ -36,7 +36,7 @@ class gcs::params {
   $archive_dir      = "${puppet_cache}/archives"
   $checksum_type    = 'sha256'
   $download_url     = undef
-  $package_name     = undef
+  $package_name     = 'collector-sidecar'
   $package_repo     = false
   $node_id_prefix   = 'graylog-collector-sidecar-'
 
