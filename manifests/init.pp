@@ -35,7 +35,7 @@
 #
 # @param send_status Boolean Send the status of each backend back to Graylog and display it on the status page for the host.
 #
-# @param conf_dir [Stdlib::Absolutepath] Specify the configuration directory for collector-sidecar.
+# @param conf_path [Stdlib::Absolutepath] Specify the configuration directory for collector-sidecar.
 #
 # @param service String The service name.
 #
@@ -77,7 +77,7 @@ class gcs (
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
   $send_status      = $gcs::params::send_status,
-  $conf_dir         = $gcs::params::conf_dir,
+  $conf_path         = $gcs::params::conf_path,
   $service          = $gcs::params::service,
   $filebeat_enable  = $gcs::params::filebeat_enable,
   $nxlog_enable     = $gcs::params::nxlog_enable,
@@ -122,7 +122,7 @@ class gcs (
   validate_bool($enable,$install_service,$tls_skip_verify,$send_status,$filebeat_enable,$nxlog_enable,$manage_cache_dir)
   validate_string($checksum,$download_url)
   validate_array($tags)
-  validate_absolute_path($log_files,$conf_dir,$puppet_cache,$archive_dir,$download_package)
+  validate_absolute_path($log_files,$conf_path,$puppet_cache,$archive_dir,$download_package)
   validate_integer($update_interval)
   validate_integer($package_revision)
 

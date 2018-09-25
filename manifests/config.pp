@@ -20,7 +20,7 @@ class gcs::config {
     fail("gcs::config is a private class of the module gcs, you're not permitted to use it.")
   }
 
-  $conf_dir         = $::gcs::params::conf_dir
+  $conf_path        = $::gcs::conf_path
   $server_url       = $::gcs::server_url
   $tags             = $::gcs::tags
   $log_files        = $::gcs::log_files
@@ -31,7 +31,7 @@ class gcs::config {
   $nxlog_enable     = $::gcs::nxlog_enable
   $node_id_prefix   = $::gcs::node_id_prefix
 
-  file { "${conf_dir}/collector_sidecar.yml":
+  file { $conf_path:
     ensure    => file,
     owner     => root,
     group     => root,

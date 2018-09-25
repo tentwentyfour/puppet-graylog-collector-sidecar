@@ -19,7 +19,6 @@ class gcs::install {
     fail("gcs::install is a private class of the module gcs, you're not permitted to use it.")
   }
 
- 
   if $::gcs::package_repo {
     # Install from configured RPM repo
     if $::gcs::package_name == undef {
@@ -82,7 +81,7 @@ class gcs::install {
       checksum      => $::gcs::checksum,
     }
 
-    package { $::gcs::service:
+    package { $::gcs::package_name:
       ensure   => present,
       source   => $::gcs::download_package,
       provider => $::gcs::package_provider,

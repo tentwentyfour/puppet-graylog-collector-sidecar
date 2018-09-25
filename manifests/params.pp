@@ -27,7 +27,7 @@ class gcs::params {
   $update_interval  = 10
   $tls_skip_verify  = false
   $send_status      = true
-  $conf_dir         = '/etc/graylog/collector-sidecar'
+  $conf_path        = '/etc/graylog/collector-sidecar/collector_sidecar.yml'
   $service          = 'collector-sidecar'
   $filebeat_enable  = true
   $nxlog_enable     = false
