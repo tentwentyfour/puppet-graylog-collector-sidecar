@@ -107,11 +107,11 @@ class gcs (
     "${package_provider} isn't supported. Valid values are 'dpkg' and 'rpm'."
   )
 
-  validate_re(
-    $checksum_type,
-    [ '^md5$', '^sha256$' ],
-    "${checksum_type} isn't supported. Valid values are 'md5' and 'sha256'."
-  )
+  # validate_re(
+  #   $checksum_type,
+  #   [ '^md5$', '^sha256$' ],
+  #   "${checksum_type} isn't supported. Valid values are 'md5' and 'sha256'."
+  # )
 
   validate_re(
     $package_version,

@@ -34,7 +34,7 @@ class gcs::params {
   $manage_cache_dir = true
   $puppet_cache     = '/var/cache/puppet'
   $archive_dir      = "${puppet_cache}/archives"
-  $checksum_type    = 'sha256'
+  # $checksum_type    = 'sha256'
   $download_url     = undef
   $package_name     = 'collector-sidecar'
   $package_repo     = false
@@ -46,13 +46,13 @@ class gcs::params {
     } elsif versioncmp($::operatingsystemrelease, '15.04') < 0 {
       $service_provider = 'upstart'
       $package_provider = 'dpkg'
-      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
-      $download_package = "${archive_dir}/collector-sidecar.${package_version}.deb"
+      #      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
+      $download_package = "${archive_dir}/${package_name}.${package_version}.deb"
     } else {
       $service_provider = 'systemd'
       $package_provider = 'dpkg'
-      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
-      $download_package = "${archive_dir}/collector-sidecar.${package_version}.deb"
+      #      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
+      $download_package = "${archive_dir}/${package_name}.${package_version}.deb"
     }
   } elsif $::operatingsystem == 'Debian' {
     if versioncmp($::operatingsystemrelease, '8.0') < 0 {
@@ -60,8 +60,8 @@ class gcs::params {
     } else {
       $service_provider = 'systemd'
       $package_provider = 'dpkg'
-      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
-      $download_package = "${archive_dir}/collector-sidecar.${package_version}.deb"
+      #      $checksum         = 'd52ae3530452f0622f215af986b80af8f1e3e340218786d132c3a75b667aadf3'
+      $download_package = "${archive_dir}/${package_name}.${package_version}.deb"
     }
   } elsif $::operatingsystem =~ /CentOS|RedHat|OracleLinux/ {
     if versioncmp($::operatingsystemrelease, '7.0') < 0 {
@@ -69,8 +69,8 @@ class gcs::params {
     } else {
       $service_provider = 'systemd'
       $package_provider = 'rpm'
-      $checksum         = '0338eab5715210cb5541d2aefabbd668e19010a4339dd2ab7187a066f0541a05'
-      $download_package = "${archive_dir}/collector-sidecar.${package_version}.rpm"
+      #      $checksum         = '0338eab5715210cb5541d2aefabbd668e19010a4339dd2ab7187a066f0541a05'
+      $download_package = "${archive_dir}/${package_name}.${package_version}.rpm"
     }
   } else {
     fail("Your plattform ${::operatingsystem} is not supported, yet.")

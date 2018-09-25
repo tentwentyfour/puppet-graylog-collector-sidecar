@@ -77,8 +77,8 @@ class gcs::install {
       ensure        => present,
       path          => $::gcs::download_package,
       source        => $download_url,
-      checksum_type => $::gcs::checksum_type,
-      checksum      => $::gcs::checksum,
+      # checksum_type => $::gcs::checksum_type,
+      # checksum      => $::gcs::checksum,
     }
 
     package { $::gcs::package_name:
