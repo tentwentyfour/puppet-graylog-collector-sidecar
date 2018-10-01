@@ -69,6 +69,7 @@ class gcs (
   $ensure           = $gcs::params::ensure,
   $enable           = $gcs::params::enable,
   $install_service  = $gcs::params::install_service,
+  $install_package  = $gcs::params::install_package,
   $server_url       = $gcs::params::server_url,
   $tags             = $gcs::params::tags,
   $package_version  = $gcs::params::package_version,

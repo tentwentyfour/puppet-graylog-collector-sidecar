@@ -19,6 +19,7 @@ class gcs::params {
   $ensure           = running
   $enable           = true
   $install_service  = true
+  $install_package  = true
   $server_url       = undef
   $tags             = []
   $package_version  = '0.1.3'
