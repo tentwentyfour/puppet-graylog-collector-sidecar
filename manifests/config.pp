@@ -19,7 +19,7 @@ class gcs::config {
   if $module_name != $caller_module_name {
     fail("gcs::config is a private class of the module gcs, you're not permitted to use it.")
   }
-
+  $ensure           = $::gcs::ensure
   $conf_path        = $::gcs::conf_path
   $server_url       = $::gcs::server_url
   $tags             = $::gcs::tags
@@ -31,13 +31,15 @@ class gcs::config {
   $nxlog_enable     = $::gcs::nxlog_enable
   $node_id_prefix   = $::gcs::node_id_prefix
 
-  file { $conf_path:
-    ensure    => file,
-    owner     => root,
-    group     => root,
-    mode      => '0640',
-    content   => template("${module_name}/sidecar/collector_sidecar.yml.erb"),
-    show_diff => true,
+  if $ensure != stopped {
+    file { $conf_path:
+      ensure    => file,
+      owner     => root,
+      group     => root,
+      mode      => '0640',
+      content   => template("${module_name}/sidecar/collector_sidecar.yml.erb"),
+      show_diff => true,
+    }
   }
 
 }
