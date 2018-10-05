@@ -35,7 +35,7 @@
 #
 # @param send_status Boolean Send the status of each backend back to Graylog and display it on the status page for the host.
 #
-# @param conf_dir [Stdlib::Absolutepath] Specify the configuration directory for collector-sidecar.
+# @param conf_path [Stdlib::Absolutepath] Specify the configuration directory for collector-sidecar.
 #
 # @param service String The service name.
 #
@@ -69,6 +69,7 @@ class gcs (
   $ensure           = $gcs::params::ensure,
   $enable           = $gcs::params::enable,
   $install_service  = $gcs::params::install_service,
+  $install_package  = $gcs::params::install_package,
   $server_url       = $gcs::params::server_url,
   $tags             = $gcs::params::tags,
   $package_version  = $gcs::params::package_version,
@@ -77,7 +78,7 @@ class gcs (
   $update_interval  = $gcs::params::update_interval,
   $tls_skip_verify  = $gcs::params::tls_skip_verify,
   $send_status      = $gcs::params::send_status,
-  $conf_dir         = $gcs::params::conf_dir,
+  $conf_path         = $gcs::params::conf_path,
   $service          = $gcs::params::service,
   $filebeat_enable  = $gcs::params::filebeat_enable,
   $nxlog_enable     = $gcs::params::nxlog_enable,
@@ -90,6 +91,9 @@ class gcs (
   $checksum         = $gcs::params::checksum,
   $download_package = $gcs::params::download_package,
   $download_url     = $gcs::params::download_url,
+  $package_name     = $gcs::params::package_name,
+  $packgae_repo     = $gcs::params::package_repo,
+  $node_id_prefix   = $gcs::params::node_id_prefix,
 ) inherits ::gcs::params {
 
   validate_re(
@@ -104,11 +108,11 @@ class gcs (
     "${package_provider} isn't supported. Valid values are 'dpkg' and 'rpm'."
   )
 
-  validate_re(
-    $checksum_type,
-    [ '^md5$', '^sha256$' ],
-    "${checksum_type} isn't supported. Valid values are 'md5' and 'sha256'."
-  )
+  # validate_re(
+  #   $checksum_type,
+  #   [ '^md5$', '^sha256$' ],
+  #   "${checksum_type} isn't supported. Valid values are 'md5' and 'sha256'."
+  # )
 
   validate_re(
     $package_version,
@@ -119,7 +123,7 @@ class gcs (
   validate_bool($enable,$install_service,$tls_skip_verify,$send_status,$filebeat_enable,$nxlog_enable,$manage_cache_dir)
   validate_string($checksum,$download_url)
   validate_array($tags)
-  validate_absolute_path($log_files,$conf_dir,$puppet_cache,$archive_dir,$download_package)
+  validate_absolute_path($log_files,$conf_path,$puppet_cache,$archive_dir,$download_package)
   validate_integer($update_interval)
   validate_integer($package_revision)
 

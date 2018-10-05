@@ -124,6 +124,12 @@ Which package version to install. Default: 0.1.0
 ##### `package_revision`
 Which package revision to install. Default: 1 (For most versions there is only one revision.)
 
+##### `package_repo`
+Use the available repo on the system when true, download package from Graylog when false. Default: false
+
+##### `package_name`
+When installing from a local repo set the name of the Graylog collocter. Default: undef
+
 ##### `log_files`
 Location of log files to index and report to the Graylog server. Default: ['/var/log']
 
@@ -155,13 +161,16 @@ Whether to create the archive directory for the downloaded package. Default: tru
 Specify the archives directory parent directory. Default: /var/cache/puppet
 
 ##### `archive_dir`
-Specify the archives directory. Default: "${puppet_cache}/archives"
+Specify the archives directory. Default: "${puppet\_cache}/archives"
 
 ##### `checksum_type`
 Specify the checksum type. Default: 'sha256'
 
 ##### `service_provider`
 Service provider to use. Default: Depends on your operating system.
+
+##### `node_id_prefix`
+Set the prefix before the hostname in the node\_id. Default: "graylog-collector-sidecar-"
 
 - **Ubuntu 15.04**: `upstart`
 - **Ubuntu 16.04**: `systemd`

@@ -8,7 +8,7 @@ list_log_files:
 <% @log_files.sort.each do |log_dir| -%>
   - <%= log_dir %>
 <% end -%>
-node_id: graylog-collector-sidecar-<%= scope.lookupvar('hostname') %>
+node_id: <%= @node_id_prefix %><%= scope.lookupvar('hostname') %>
 collector_id: file:/etc/graylog/collector-sidecar/collector-id
 cache_path: /var/cache/graylog/collector-sidecar
 log_path: /var/log/graylog/collector-sidecar
